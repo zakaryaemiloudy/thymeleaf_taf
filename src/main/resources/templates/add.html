@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Client</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div th:include="navbar.html"></div>
+
+<div class="container">
+    <h1>Ajouter un client</h1>
+
+    <form th:action="@{/add}" method="post" th:object="${client}">
+        <div class="form-group">
+            <label for="name">Nom:</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" required>
+        </div>
+            <span th:errors="${client.name}" class="text-danger">Nom doit etre plus de 3 char</span>
+
+        <div class="form-group">
+            <label for="lastName">Prénom:</label>
+            <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
+        </div>
+            <span th:errors="${client.lastName}" class="text-danger">Prenom doit etre plus de 3 char</span>
+
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" class="form-control" id="age" th:field="*{age}" required>
+        </div>
+            <span th:errors="${client.age}" class="text-danger">age doit etre superieur a 18</span>
+
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+        <a th:href="@{/clients}" class="btn btn-default">Annuler</a>
+    </form>
+</div>
+</body>
+</html>
