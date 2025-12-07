@@ -14,7 +14,7 @@
 
 <div class="container">
     <h1>Update Client</h1>
-    <form th:action="@{/update}" method="post" class="form-horizontal" th:object="${client}">
+    <form th:action="@{/admin/update}" method="post" class="form-horizontal" th:object="${client}">
         <input type="hidden" name="id" th:value="*{id}">
 
         <div class="form-group">
@@ -44,7 +44,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-primary">Update</button>
-                <a th:href="@{/clients}" class="btn btn-default">Cancel</a>
+                <a th:href="@{/user/clients}" class="btn btn-default">Cancel</a>
             </div>
         </div>
     </form>

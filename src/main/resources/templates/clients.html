@@ -11,14 +11,14 @@
 
 <h1>Clients</h1>
 <div class="container">
-    <form th:action="@{search}" method="get" class="form-inline mb-3">
+    <form th:action="@{/user/search}" method="get" class="form-inline mb-3">
         <div class="form-group">
             <input type="text" name="mot" class="form-control" placeholder="Search by name" th:value="${mot}">
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
     </form>
 
-    <a th:href="@{addForm}" class="btn btn-success">Add Client</a>
+    <a th:href="@{/admin/addForm}" class="btn btn-success">Add Client</a>
 
     <table class="table table-striped">
 
@@ -44,8 +44,8 @@
             <td th:text="${c.lastName}"></td>
             <td th:text="${c.age}"></td>
             <td>
-                <a class="btn btn-danger" th:href="@{delete(id=${c.id})}" onclick="return confirm('wax bs7 bghiti tms7 had khayna')">supprimer</a>
-                <a class="btn btn-success" th:href="@{updateForm(id=${c.id})}">modifier</a>
+                <a class="btn btn-danger" th:href="@{/admin/delete(id=${c.id})}" onclick="return confirm('wax bs7 bghiti tms7 had khayna')">supprimer</a>
+                <a class="btn btn-success" th:href="@{/admin/updateForm(id=${c.id})}">modifier</a>
             </td>
 
         </tr>
