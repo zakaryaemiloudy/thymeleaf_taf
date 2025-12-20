@@ -2,6 +2,7 @@ package com.example.taf_thymeleaf;
 
 import com.example.taf_thymeleaf.Entities.Client;
 import com.example.taf_thymeleaf.Repositories.ClientRepo;
+import com.example.taf_thymeleaf.service.CompteUtilisateurService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -49,7 +50,32 @@ public class TafThymeleafApplication {
 
 
 
+
     @Bean
+    CommandLineRunner userDetalsPer(CompteUtilisateurService compteUtilisateurService) {
+        return args -> {
+            compteUtilisateurService.AddNewRole("USER");
+            compteUtilisateurService.AddNewRole("ADMIN");
+            compteUtilisateurService.AddNewUser("admin", "admin", "admin@gmail.com", "admin");
+            compteUtilisateurService.AddNewUser("user1", "user", "user1@gmail.com", "user");
+
+            compteUtilisateurService.AddNewUser("user2", "user", "user2@gmail.com", "user");
+
+            compteUtilisateurService.AddRoleToUser("admin", "ADMIN");
+            compteUtilisateurService.AddRoleToUser("admin", "USER");
+
+            compteUtilisateurService.AddRoleToUser("user1", "USER");
+            compteUtilisateurService.AddRoleToUser("user2", "USER");
+
+
+        };
+    }
+
+
+
+
+
+    //@Bean
     CommandLineRunner jbdcauthentification(JdbcUserDetailsManager jdbcUserDetailsManager, PasswordEncoder passwordEncoder) {
         return args -> {
 
