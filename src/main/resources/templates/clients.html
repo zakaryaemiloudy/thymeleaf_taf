@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -18,7 +19,7 @@
         </div>
     </form>
 
-    <a th:href="@{/admin/addForm}" class="btn btn-success">Add Client</a>
+    <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/addForm}" class="btn btn-success">Add Client</a>
 
     <table class="table table-striped">
 
@@ -29,7 +30,7 @@
             <th>nom</th>
             <th>prenom</th>
             <th>age</th>
-            <th>actions</th>
+            <th sec:authorize="hasRole('ADMIN')">actions</th>
         </tr>
 
         </thead>
@@ -43,8 +44,8 @@
             <td th:text="${c.name}"></td>
             <td th:text="${c.lastName}"></td>
             <td th:text="${c.age}"></td>
-            <td>
-                <a class="btn btn-danger" th:href="@{/admin/delete(id=${c.id})}" onclick="return confirm('wax bs7 bghiti tms7 had khayna')">supprimer</a>
+            <td sec:authorize="hasRole('ADMIN')">
+            <a class="btn btn-danger" th:href="@{/admin/delete(id=${c.id})}" onclick="return confirm('wax bs7 bghiti tms7 had khayna')">supprimer</a>
                 <a class="btn btn-success" th:href="@{/admin/updateForm(id=${c.id})}">modifier</a>
             </td>
 
