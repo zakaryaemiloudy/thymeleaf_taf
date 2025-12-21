@@ -1,8 +1,6 @@
 package com.example.taf_thymeleaf.security;
 
 
-import com.example.taf_thymeleaf.service.UserDetailsServiceImpl;
-import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -19,12 +17,11 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
 public class SecurityConfig {
-    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
 
-    //@Bean
+
+    @Bean
     public JdbcUserDetailsManager  JdbcUserDetailsManager(DataSource dataSource) {
         return new JdbcUserDetailsManager(dataSource);
 
@@ -41,7 +38,7 @@ public class SecurityConfig {
         );
     }
 
-    //@Bean
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .formLogin(fl->fl.loginPage("/login").defaultSuccessUrl("/").permitAll())
@@ -51,49 +48,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(ar->ar.requestMatchers("/h2-console/**").permitAll())
                 .authorizeHttpRequests(ar -> ar.anyRequest().authenticated())
                 .exceptionHandling(eh -> eh.accessDeniedPage("/accessDenied"))
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+//                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .build();
-    }
-
-
-
-
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        http
-                .formLogin(Customizer.withDefaults())
-
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
-
-                .headers(header -> header.frameOptions(frame-> frame.disable()))
-
-                .exceptionHandling(e -> e.accessDeniedPage("/public/notAuth"))
-                .formLogin(fl->fl.loginPage("/login").defaultSuccessUrl("/").permitAll())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/**")
-                        .hasRole("ADMIN")
-
-                        .requestMatchers("/user/**")
-                        .hasAnyRole("USER","ADMIN")
-
-                        .requestMatchers("/public/**")
-                        .permitAll()
-
-                        .requestMatchers("/webJars/**")
-                        .permitAll()
-                        .requestMatchers("/h2-console/**")
-                        .permitAll()
-
-
-                        .anyRequest().authenticated()
-                )
-                .userDetailsService(userDetailsServiceImpl);
-
-
-        return http.build();
     }
 
 }
